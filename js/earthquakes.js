@@ -23,8 +23,7 @@ gov.usgs.quakesUrl = 'https://soda.demo.socrata.com/resource/earthquakes.json?$$
 gov.usgs.quakes;
 
 //reference to our google map
-gov.usgs.quakesMap;
-
+gov.usgs.quakesMap
 
 //Document ready
 $(function() {
@@ -77,18 +76,21 @@ function addQuakeMarkers(quakes, map) {
 } //getQuakes()
 
 
-//Closure to refer to map, marker, and infoWindow variables when registerInfoWindow is called,
-//Click event handler for current marker
+//Click event handler to display current marker. Closes previous display if open.
+//Closure to refer to map, marker, and infoWindow variables when registerInfoWindow is called.
 //@param map (google.maps.Map) - Google map object
 //@param marker (google.maps.Marker) - Google marker object indicating location of earthquake
 //@param infoWindow (google.maps.InfoWindow) - Google infowindow object displaying detailed information of earthquake
 function registerInfoWindow(map, marker, infoWindow) {
     google.maps.event.addListener(marker, 'click', function(){
-
+		if (gov.usgs.iw) {
+			gov.usgs.iw.close(); //Closes previous infoWindow if open.
+		}
+        gov.usgs.iw = infoWindow; //Store current infoWindow to close before showing next infoWindow.
         infoWindow.open(map, marker);
-
     });                
 } //registerInfoWindow()
+
 
 
 
